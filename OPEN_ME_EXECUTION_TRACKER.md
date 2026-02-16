@@ -107,6 +107,9 @@ Last updated: 2026-02-16
 - [x] Post-redesign quality gates verified (`lint`, `test`, `build`)
 - [x] Animation bundle loading optimized via lazy Lottie import; build warning for oversized chunks resolved
 - [x] Framer Motion moved to `LazyMotion` + `m.*` primitives for leaner runtime loading and validated build output
+- [x] App upgraded from single-page flow to multi-page experience with router-driven navigation
+- [x] Added premium landing page and product story page with shared themed navigation
+- [x] Existing envelope dashboard moved under dedicated `/open` route in the new site structure
 
 ## 4) Definition of execution complete
 

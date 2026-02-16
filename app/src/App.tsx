@@ -4,6 +4,7 @@ import EnvelopeCard from "./components/EnvelopeCard";
 import LetterViewer from "./components/LetterViewer";
 import AppHeader from "./components/layout/AppHeader";
 import DecorativeBackground from "./components/layout/DecorativeBackground";
+import SiteNav from "./components/layout/SiteNav";
 import AnimatedIcon from "./components/primitives/AnimatedIcon";
 import EntranceAnimator from "./components/primitives/EntranceAnimator";
 import { isUnlocked, lockCountdownLabel, seedLetters, type Letter } from "./features/envelopes";
@@ -747,6 +748,7 @@ function App() {
           title="Open Me"
           subtitle={`Choose an envelope that matches the moment. Firebase: ${firebaseStatus}`}
         />
+        <SiteNav />
 
         <div className="envelope-toolbar">
           <button type="button" onClick={handleRefreshLetters} disabled={lettersBusy || lettersRefreshing}>

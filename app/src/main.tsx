@@ -1,14 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
+import { BrowserRouter } from "react-router-dom";
+import RouterApp from "./RouterApp";
 import "./styles/global.css";
 import { UiPreferencesProvider } from "./lib/uiPreferences";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <UiPreferencesProvider>
-      <App />
-    </UiPreferencesProvider>
+    <BrowserRouter>
+      <UiPreferencesProvider>
+        <RouterApp />
+      </UiPreferencesProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
