@@ -16,6 +16,8 @@ export type Letter = {
   lockType: LockType;
   unlockAt?: string;
   media?: MediaBlock[];
+  updatedAt?: string;
+  updatedBy?: string;
 };
 
 const nowPlusHours = (hours: number) =>
@@ -95,4 +97,27 @@ export function lockLabel(letter: Letter, now = new Date()) {
   }
 
   return `Unlocks ${unlockAt.toLocaleString()}`;
+}
+
+export function lockCountdownLabel(letter: Letter, now = new Date()) {
+  if (letter.lockType !== "time" || !letter.unlockAt) {
+    return "";
+  }
+
+  const unlockAt = new Date(letter.unlockAt).getTime();
+  const differenceMs = unlockAt - now.getTime();
+
+  if (differenceMs <= 0) {
+    return "Ready to open";
+  }
+
+  const totalMinutes = Math.ceil(differenceMs / (60 * 1000));
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+
+  if (hours > 0) {
+    return `Opens in ${hours}h ${minutes}m`;
+  }
+
+  return `Opens in ${minutes}m`;
 }

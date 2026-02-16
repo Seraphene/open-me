@@ -1,3 +1,10 @@
+import {
+  applyWriteEndpointSecurityHeaders,
+  handleWriteEndpointPreflight,
+  validateCorsOrigin,
+  validateJsonWriteRequest
+} from "./security";
+
 type ReadReceiptPayload = {
   letterId?: string;
   openedAt?: string;
@@ -8,6 +15,7 @@ type ReadReceiptPayload = {
 type RequestBody = {
   method?: string;
   body?: ReadReceiptPayload;
+  headers?: Record<string, string | undefined>;
 };
 
 type ResponseWriter = {
@@ -20,8 +28,24 @@ function isIsoDate(value: string) {
 }
 
 export default function handler(req: RequestBody, res: ResponseWriter) {
+  applyWriteEndpointSecurityHeaders(res);
+
+  if (handleWriteEndpointPreflight(req, res)) {
+    return;
+  }
+
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  const corsValidation = validateCorsOrigin(req, res);
+  if (corsValidation) {
+    return res.status(corsValidation.status).json({ error: corsValidation.error });
+  }
+
+  const validation = validateJsonWriteRequest(req, { maxPayloadBytes: 4_096 });
+  if (validation) {
+    return res.status(validation.status).json({ error: validation.error });
   }
 
   const payload = req.body;

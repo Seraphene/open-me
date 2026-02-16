@@ -48,8 +48,54 @@ body {
   font-weight: 600;
 }
 
+.connectivity-banner--sync {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.connectivity-banner--sync p {
+  margin: 0;
+}
+
+.connectivity-banner--sync button {
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+}
+
 .subtitle {
   margin: 0.75rem 0 1rem;
+}
+
+.envelope-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.envelope-toolbar button {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  padding: 0.45rem 0.7rem;
+  cursor: pointer;
+}
+
+.envelope-toolbar button:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.sync-status {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
 }
 
 .auth-panel {
@@ -84,11 +130,63 @@ body {
   gap: 0.9rem;
 }
 
+.cms-panel {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.6rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 0.85rem;
+}
+
+.cms-panel h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.cms-lock-note,
+.cms-meta {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.cms-grid {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.cms-grid input,
+.cms-grid select,
+.cms-grid textarea,
+.cms-panel select {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  background: #ffffff;
+  color: inherit;
+}
+
+.cms-grid textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
 .envelope {
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   padding: 1rem;
   background: #fff7ed;
+}
+
+.empty-state {
+  margin: 0;
+  padding: 0.9rem;
+  border: 1px dashed #cbd5e1;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  background: #f8fafc;
 }
 
 .envelope--locked {
@@ -110,6 +208,11 @@ body {
   font-weight: 600;
 }
 
+.envelope-note {
+  margin: 0.1rem 0 0.4rem;
+  font-size: 0.82rem;
+}
+
 .envelope button {
   margin-top: 0.25rem;
   border: 0;
@@ -118,6 +221,11 @@ body {
   color: white;
   padding: 0.5rem 0.75rem;
   cursor: pointer;
+}
+
+.envelope button:disabled {
+  opacity: 0.7;
+  cursor: default;
 }
 
 .auth-row button {
@@ -139,11 +247,16 @@ body {
   font-weight: 600;
 }
 
-.viewer {
+.viewer-overlay {
   position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.viewer {
   width: min(760px, calc(100% - 2rem));
   max-height: calc(100vh - 2rem);
   overflow: auto;

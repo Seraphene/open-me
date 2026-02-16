@@ -1,3 +1,10 @@
+import {
+  applyWriteEndpointSecurityHeaders,
+  handleWriteEndpointPreflight,
+  validateCorsOrigin,
+  validateJsonWriteRequest
+} from "./security";
+
 type LockType = "honor" | "time";
 
 type UnlockRequest = {
@@ -10,6 +17,7 @@ type UnlockRequest = {
 type RequestBody = {
   method?: string;
   body?: UnlockRequest;
+  headers?: Record<string, string | undefined>;
 };
 
 type ResponseWriter = {
@@ -17,8 +25,24 @@ type ResponseWriter = {
 };
 
 export default function handler(req: RequestBody, res: ResponseWriter) {
+  applyWriteEndpointSecurityHeaders(res);
+
+  if (handleWriteEndpointPreflight(req, res)) {
+    return;
+  }
+
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  const corsValidation = validateCorsOrigin(req, res);
+  if (corsValidation) {
+    return res.status(corsValidation.status).json({ error: corsValidation.error });
+  }
+
+  const validation = validateJsonWriteRequest(req, { maxPayloadBytes: 2_048 });
+  if (validation) {
+    return res.status(validation.status).json({ error: validation.error });
   }
 
   const body = req.body as UnlockRequest;

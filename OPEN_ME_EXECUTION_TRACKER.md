@@ -14,13 +14,13 @@ Last updated: 2026-02-16
 |---|---:|---:|---:|---|---|
 | Requirements lock-in | 10 | 10 | 0 | You + Copilot | Complete |
 | Architecture and decisions | 8 | 8 | 0 | You + Copilot | Complete |
-| Project setup and scaffolding | 12 | 11 | 1 | Copilot | In progress |
-| Core envelope UX | 14 | 6 | 8 | Copilot | In progress |
-| Auth/CMS/events | 18 | 7 | 11 | Copilot | In progress |
-| PWA/offline | 10 | 3 | 7 | Copilot | In progress |
-| Testing/CI | 12 | 7 | 5 | Copilot | In progress |
-| Security/privacy hardening | 12 | 0 | 12 | Copilot | Pending |
-| Handoff docs and final QA | 9 | 6 | 3 | You + Copilot | In progress |
+| Project setup and scaffolding | 12 | 12 | 0 | Copilot | Complete |
+| Core envelope UX | 14 | 14 | 0 | Copilot | Complete |
+| Auth/CMS/events | 18 | 18 | 0 | Copilot | Complete |
+| PWA/offline | 10 | 10 | 0 | Copilot | Complete |
+| Testing/CI | 12 | 12 | 0 | Copilot | Complete |
+| Security/privacy hardening | 12 | 12 | 0 | Copilot | Complete |
+| Handoff docs and final QA | 9 | 9 | 0 | You + Copilot | Complete |
 
 ## 3) Current sprint checklist
 
@@ -58,6 +58,49 @@ Last updated: 2026-02-16
 - [x] Emergency support button wired in letter viewer with API feedback
 - [x] Service worker registered and app-shell caching enabled
 - [x] Offline connectivity banner added in app UI
+- [x] Offline event queue added for read-receipt and letter-open posts
+- [x] Automatic queue flush on app load and reconnect implemented
+- [x] Endpoint rate limiting added for emergency and CMS update paths
+- [x] Security rate-limit tests added for emergency and CMS endpoints
+- [x] Strict JSON content-type guards added for write endpoints
+- [x] Payload-size limits added for write endpoints with guard tests
+- [x] Write-endpoint origin allowlist policy enforced with preflight handling
+- [x] CORS/origin enforcement tests added for emergency, CMS, and read-receipt paths
+- [x] Security response headers + no-store cache policy applied to write endpoints
+- [x] Header hardening assertions added to endpoint unit tests
+- [x] Letter list endpoint implemented and wired for frontend API-backed loading
+- [x] CMS letter update endpoint now persists updates into shared backend letter store
+- [x] Letter list unit tests added (method, payload, update reflection)
+- [x] Firestore-capable durable letter persistence added with safe in-memory fallback
+- [x] Runtime dependency for server-side Firestore Admin SDK installed and validated
+- [x] In-app CMS editor panel added for selecting/updating letters via API
+- [x] CMS save flow wired with admin token header and local state refresh
+- [x] Time-lock countdown status added and refreshed live in dashboard cards
+- [x] Viewer close UX improved with backdrop click and Esc key support
+- [x] Dashboard refresh action added for reloading latest letters without full reload
+- [x] Empty-state UX added for zero-letter dashboards with CMS guidance
+- [x] Honor-lock confirmations persisted across reloads for smoother repeat use
+- [x] Last successful letters sync time shown in dashboard toolbar
+- [x] CMS editor now supports explicit new-letter draft flow from dashboard
+- [x] CMS client-side letter ID validation added before save requests
+- [x] CMS updates now capture audit metadata (`updatedAt`, `updatedBy`)
+- [x] CMS editor access gated to signed-in users with clear inline guidance
+- [x] CMS update API now requires authenticated actor header (`x-actor-id`) on authorized writes
+- [x] CMS actor identity enforced end-to-end (UI request + API validation + test coverage)
+- [x] Letters cached locally for offline fallback when API fetch is unavailable
+- [x] Offline event queue status surfaced in UI with manual sync and clear actions
+- [x] Service worker update-ready prompt added with one-click reload
+- [x] Offline queue utility emits change events for live dashboard updates
+- [x] Offline queue unit test coverage added for size/event behavior
+- [x] Emergency-notify endpoint input hardening added (email format + message length limits)
+- [x] CMS letter-update server-side ID format validation enforced
+- [x] Deployment security headers configured at Vercel routing layer
+- [x] Runbook expanded with operational env/backup/restore and release QA checklist
+- [x] Handoff doc expanded with ownership, rotation, and post-transfer verification
+- [x] Final local QA gates passed (`lint`, `test`, `build`)
+- [x] CMS server-side field length validation added for title/preview/content bounds
+- [x] Emergency-notify context length validation added with test coverage
+- [x] Security validation suite expanded and verified green after hardening updates
 
 ## 4) Definition of execution complete
 

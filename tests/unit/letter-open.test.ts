@@ -38,7 +38,14 @@ describe("letter-open", () => {
   it("validates required fields", () => {
     const { captured, res } = createResponseCapture();
 
-    handler({ method: "POST", body: { letterId: "sad-day" } }, res);
+    handler(
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: { letterId: "sad-day" }
+      },
+      res
+    );
 
     expect(captured.statusCode).toBe(400);
     expect(captured.payload).toEqual({ error: "openedAt must be a valid ISO datetime" });
@@ -50,6 +57,7 @@ describe("letter-open", () => {
     handler(
       {
         method: "POST",
+        headers: { "content-type": "application/json" },
         body: {
           letterId: "sad-day",
           openedAt: "2026-02-16T22:10:00.000Z",
@@ -70,6 +78,7 @@ describe("letter-open", () => {
     handler(
       {
         method: "POST",
+        headers: { "content-type": "application/json" },
         body: {
           letterId: "sad-day",
           openedAt: "2026-02-16T22:10:00.000Z",

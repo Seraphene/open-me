@@ -11,6 +11,17 @@ export default [
     languageOptions: {
       ecmaVersion: 2020,
       parser: tsParser,
+      globals: {
+        window: "readonly",
+        document: "readonly",
+        navigator: "readonly",
+        fetch: "readonly",
+        Event: "readonly",
+        EventListener: "readonly",
+        CustomEvent: "readonly",
+        KeyboardEvent: "readonly",
+        HTMLElement: "readonly"
+      },
       parserOptions: {
         sourceType: "module",
         ecmaFeatures: { jsx: true }

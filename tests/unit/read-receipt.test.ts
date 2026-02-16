@@ -27,6 +27,15 @@ function createResponseCapture() {
 }
 
 describe("read-receipt", () => {
+  it("accepts OPTIONS preflight", () => {
+    const { captured, res } = createResponseCapture();
+
+    handler({ method: "OPTIONS" }, res);
+
+    expect(captured.statusCode).toBe(204);
+    expect(captured.payload).toEqual({ ok: true });
+  });
+
   it("rejects non-POST methods", () => {
     const { captured, res } = createResponseCapture();
 
@@ -39,7 +48,14 @@ describe("read-receipt", () => {
   it("rejects missing required fields", () => {
     const { captured, res } = createResponseCapture();
 
-    handler({ method: "POST", body: { openedAt: "2026-02-16T21:00:00.000Z" } }, res);
+    handler(
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: { openedAt: "2026-02-16T21:00:00.000Z" }
+      },
+      res
+    );
 
     expect(captured.statusCode).toBe(400);
     expect(captured.payload).toEqual({ error: "letterId is required" });
@@ -51,6 +67,7 @@ describe("read-receipt", () => {
     handler(
       {
         method: "POST",
+        headers: { "content-type": "application/json" },
         body: {
           letterId: "sad-day",
           openedAt: "not-a-date"
@@ -69,6 +86,7 @@ describe("read-receipt", () => {
     handler(
       {
         method: "POST",
+        headers: { "content-type": "application/json" },
         body: {
           letterId: "sad-day",
           openedAt: "2026-02-16T21:00:00.000Z",
@@ -89,5 +107,25 @@ describe("read-receipt", () => {
         deviceType: "mobile"
       }
     });
+  });
+
+  it("rejects oversized payload", () => {
+    const { captured, res } = createResponseCapture();
+
+    handler(
+      {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: {
+          letterId: "sad-day",
+          openedAt: "2026-02-16T21:00:00.000Z",
+          recipientId: "x".repeat(10_000)
+        }
+      },
+      res
+    );
+
+    expect(captured.statusCode).toBe(413);
+    expect(captured.payload).toEqual({ error: "Payload too large" });
   });
 });

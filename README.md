@@ -12,7 +12,7 @@ Private "Open When" gift web app with locked envelopes, multimedia letters, and 
 ## Current status
 
 - Phase 0 scaffolding is complete.
-- Feature implementation starts in Phase 1.
+- Core Phase 1 flows are active, including complete core envelope UX, in-app CMS authoring flow, and PWA/offline improvements (cached letters fallback, queue sync controls, update-ready prompt).
 
 ## Repository layout
 
