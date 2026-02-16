@@ -1,4 +1,6 @@
 import type { Letter } from "../features/envelopes";
+import { m } from "framer-motion";
+import { useUiPreferences } from "../lib/uiPreferences";
 
 type LetterViewerProps = {
   letter: Letter;
@@ -9,13 +11,19 @@ type LetterViewerProps = {
 };
 
 function LetterViewer({ letter, onClose, onEmergencySupport, emergencyBusy, emergencyMessage }: LetterViewerProps) {
+  const { effectiveMotionEnabled } = useUiPreferences();
+
   return (
     <div className="viewer-overlay" onClick={onClose}>
-      <section
+      <m.section
         className="viewer"
         role="dialog"
         aria-modal="true"
         aria-label={letter.title}
+        initial={effectiveMotionEnabled ? { opacity: 0, y: 20, scale: 0.98 } : undefined}
+        animate={effectiveMotionEnabled ? { opacity: 1, y: 0, scale: 1 } : undefined}
+        exit={effectiveMotionEnabled ? { opacity: 0, y: 12 } : undefined}
+        transition={effectiveMotionEnabled ? { duration: 0.28, ease: [0.2, 1, 0.3, 1] } : undefined}
         onClick={(event) => event.stopPropagation()}
       >
         <header className="viewer-header">
@@ -55,7 +63,7 @@ function LetterViewer({ letter, onClose, onEmergencySupport, emergencyBusy, emer
             );
           })}
         </div>
-      </section>
+      </m.section>
     </div>
   );
 }

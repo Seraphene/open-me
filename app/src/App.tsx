@@ -1,6 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
+import { AnimatePresence, LazyMotion } from "framer-motion";
 import EnvelopeCard from "./components/EnvelopeCard";
 import LetterViewer from "./components/LetterViewer";
+import AppHeader from "./components/layout/AppHeader";
+import DecorativeBackground from "./components/layout/DecorativeBackground";
+import AnimatedIcon from "./components/primitives/AnimatedIcon";
+import EntranceAnimator from "./components/primitives/EntranceAnimator";
 import { isUnlocked, lockCountdownLabel, seedLetters, type Letter } from "./features/envelopes";
 import {
   GoogleAuthProvider,
@@ -713,8 +718,10 @@ function App() {
   };
 
   return (
-    <main className="app-shell">
-      <section className="card">
+    <LazyMotion features={() => import("framer-motion").then((module) => module.domAnimation)} strict>
+      <main className="app-shell">
+        <DecorativeBackground />
+        <section className="card">
         {!isOnline ? <p className="connectivity-banner">Offline mode: cached content may be limited.</p> : null}
         {isOnline && pendingOfflineEvents > 0 ? (
           <div className="connectivity-banner connectivity-banner--sync">
@@ -736,12 +743,10 @@ function App() {
           </div>
         ) : null}
 
-        <header className="topbar">
-          <h1>Open Me</h1>
-          <p className="status">Firebase: {firebaseStatus}</p>
-        </header>
-
-        <p className="subtitle">Choose an envelope that matches the moment.</p>
+        <AppHeader
+          title="Open Me"
+          subtitle={`Choose an envelope that matches the moment. Firebase: ${firebaseStatus}`}
+        />
 
         <div className="envelope-toolbar">
           <button type="button" onClick={handleRefreshLetters} disabled={lettersBusy || lettersRefreshing}>
@@ -754,7 +759,8 @@ function App() {
           </p>
         </div>
 
-        <section className="auth-panel" aria-label="Authentication">
+        <EntranceAnimator>
+          <section className="auth-panel" aria-label="Authentication">
           {authUser ? (
             <div className="auth-row">
               <p className="status">Signed in: {authUser.email ?? "Unknown email"}</p>
@@ -784,13 +790,18 @@ function App() {
             </>
           )}
           {authMessage ? <p className="auth-message">{authMessage}</p> : null}
-        </section>
+          </section>
+        </EntranceAnimator>
 
-        <section className="envelope-grid" aria-label="Envelope dashboard">
+        <EntranceAnimator delay={0.06}>
+          <section className="envelope-grid" aria-label="Envelope dashboard">
           {lettersBusy ? <p className="status">Loading letters...</p> : null}
           {lettersMessage ? <p className="status">{lettersMessage}</p> : null}
           {!lettersBusy && letters.length === 0 ? (
-            <p className="empty-state">No letters found yet. Sign in and use the CMS editor below to create your first one.</p>
+            <div className="empty-state">
+              <AnimatedIcon label="No letters" className="empty-illustration" />
+              <p>No letters found yet. Sign in and use the CMS editor below to create your first one.</p>
+            </div>
           ) : null}
           {letters.map((letter) => {
             const timeUnlocked = letter.lockType === "time" ? isUnlocked(letter, now) : true;
@@ -819,10 +830,12 @@ function App() {
               />
             );
           })}
-        </section>
+          </section>
+        </EntranceAnimator>
 
-        {authUser ? (
-          <section className="cms-panel" aria-label="CMS editor">
+        <EntranceAnimator delay={0.1}>
+          {authUser ? (
+            <section className="cms-panel" aria-label="CMS editor">
             <h2>CMS editor</h2>
             <div className="auth-row">
               <input
@@ -943,25 +956,29 @@ function App() {
               </button>
               {cmsMessage ? <p className="auth-message">{cmsMessage}</p> : null}
             </div>
-          </section>
-        ) : (
-          <section className="cms-panel" aria-label="CMS editor">
-            <h2>CMS editor</h2>
-            <p className="cms-lock-note">Sign in first to access the CMS editor.</p>
-          </section>
-        )}
-      </section>
+            </section>
+          ) : (
+            <section className="cms-panel" aria-label="CMS editor">
+              <h2>CMS editor</h2>
+              <p className="cms-lock-note">Sign in first to access the CMS editor.</p>
+            </section>
+          )}
+        </EntranceAnimator>
+        </section>
 
-      {activeLetter ? (
-        <LetterViewer
-          letter={activeLetter}
-          onClose={() => setActiveLetterId(null)}
-          onEmergencySupport={handleEmergencySupport}
-          emergencyBusy={emergencyBusy}
-          emergencyMessage={emergencyMessage}
-        />
-      ) : null}
-    </main>
+        <AnimatePresence>
+          {activeLetter ? (
+            <LetterViewer
+              letter={activeLetter}
+              onClose={() => setActiveLetterId(null)}
+              onEmergencySupport={handleEmergencySupport}
+              emergencyBusy={emergencyBusy}
+              emergencyMessage={emergencyMessage}
+            />
+          ) : null}
+        </AnimatePresence>
+      </main>
+    </LazyMotion>
   );
 }
 

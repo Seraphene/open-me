@@ -1,6 +1,6 @@
 {
   "framework": "vite",
-  "installCommand": "npm --prefix app install",
+  "installCommand": "npm install; npm --prefix app install",
   "buildCommand": "npm --prefix app run build",
   "outputDirectory": "app/dist",
   "headers": [
@@ -33,12 +33,6 @@
           "value": "max-age=63072000; includeSubDomains; preload"
         }
       ]
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/(.*)",
-      "destination": "/functions/$1.ts"
     }
   ]
 }
