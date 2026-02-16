@@ -745,8 +745,8 @@ function App() {
         ) : null}
 
         <AppHeader
-          title="Open Me"
-          subtitle={`Choose an envelope that matches the moment. Firebase: ${firebaseStatus}`}
+          title="Experience"
+          subtitle={`Interactive envelope dashboard and CMS. Firebase: ${firebaseStatus}`}
         />
         <SiteNav />
 

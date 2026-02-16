@@ -50,6 +50,19 @@ function HomePage() {
             </article>
           </section>
         </EntranceAnimator>
+
+        <EntranceAnimator delay={0.12}>
+          <section className="page-map" aria-label="Site map preview">
+            <h3>Explore pages</h3>
+            <ul>
+              <li><Link to="/open">/open — Live envelope experience and CMS</Link></li>
+              <li><Link to="/story">/story — Narrative and journey timeline</Link></li>
+              <li><Link to="/gallery">/gallery — Pattern showcase and highlights</Link></li>
+              <li><Link to="/about">/about — Product principles and trust model</Link></li>
+              <li><Link to="/contact">/contact — Operations and handoff references</Link></li>
+            </ul>
+          </section>
+        </EntranceAnimator>
       </section>
     </main>
   );

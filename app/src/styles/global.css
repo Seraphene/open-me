@@ -181,6 +181,10 @@ textarea:focus-visible {
   width: min(1020px, 100%);
 }
 
+.page-card {
+  width: min(980px, 100%);
+}
+
 .hero {
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
@@ -260,6 +264,108 @@ textarea:focus-visible {
 .showcase-card p {
   margin: 0.45rem 0 0;
   color: var(--muted);
+}
+
+.page-map {
+  margin-top: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  padding: 0.9rem;
+}
+
+.page-map h3 {
+  margin: 0;
+}
+
+.page-map ul {
+  margin: 0.6rem 0 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.page-map a {
+  color: var(--accent-500);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+}
+
+.info-card {
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
+  background: var(--surface-soft);
+  padding: 0.9rem;
+}
+
+.info-card h3 {
+  margin: 0;
+}
+
+.info-card p {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+}
+
+.gallery-tile {
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: color-mix(in oklab, var(--surface-soft) 80%, white 20%);
+  padding: 0.9rem;
+}
+
+.gallery-index {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.gallery-tile h3 {
+  margin: 0.3rem 0 0;
+}
+
+.gallery-tile p {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+}
+
+.contact-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface-soft);
+  padding: 0.95rem;
+}
+
+.contact-panel h3 {
+  margin: 0;
+}
+
+.contact-panel > p {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+}
+
+.contact-list {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.contact-list p {
+  margin: 0;
 }
 
 .story-timeline {

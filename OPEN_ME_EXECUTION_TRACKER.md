@@ -110,6 +110,8 @@ Last updated: 2026-02-16
 - [x] App upgraded from single-page flow to multi-page experience with router-driven navigation
 - [x] Added premium landing page and product story page with shared themed navigation
 - [x] Existing envelope dashboard moved under dedicated `/open` route in the new site structure
+- [x] Multi-page scaffold expanded with `/gallery`, `/about`, and `/contact` routes and dedicated content layouts
+- [x] Homepage now includes explicit route map links to reinforce true multi-page IA
 
 ## 4) Definition of execution complete
 

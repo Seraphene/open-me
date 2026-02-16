@@ -3,7 +3,10 @@ import { NavLink } from "react-router-dom";
 const links = [
   { to: "/", label: "Home", end: true },
   { to: "/open", label: "Experience" },
-  { to: "/story", label: "Story" }
+  { to: "/story", label: "Story" },
+  { to: "/gallery", label: "Gallery" },
+  { to: "/about", label: "About" },
+  { to: "/contact", label: "Contact" }
 ];
 
 function SiteNav() {
