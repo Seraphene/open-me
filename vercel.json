@@ -34,5 +34,31 @@
         }
       ]
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/favicon.ico",
+      "destination": "/favicon.svg"
+    },
+    {
+      "source": "/open",
+      "destination": "/"
+    },
+    {
+      "source": "/story",
+      "destination": "/"
+    },
+    {
+      "source": "/gallery",
+      "destination": "/"
+    },
+    {
+      "source": "/about",
+      "destination": "/"
+    },
+    {
+      "source": "/contact",
+      "destination": "/"
+    }
   ]
 }
