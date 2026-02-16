@@ -112,6 +112,9 @@ Last updated: 2026-02-16
 - [x] Existing envelope dashboard moved under dedicated `/open` route in the new site structure
 - [x] Multi-page scaffold expanded with `/gallery`, `/about`, and `/contact` routes and dedicated content layouts
 - [x] Homepage now includes explicit route map links to reinforce true multi-page IA
+- [x] Letter reading converted from modal overlay to dedicated route page (`/open/letter/:letterId`) for stronger app-like navigation
+- [x] Router-level crossfade/slide transitions added between routes for smoother SSR-like page feel
+- [x] Route transitions upgraded to directional motion (forward/back feel) with `UiPreferences` motion-awareness
 
 ## 4) Definition of execution complete
 

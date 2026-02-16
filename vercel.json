@@ -45,6 +45,10 @@
       "destination": "/"
     },
     {
+      "source": "/open/letter/(.*)",
+      "destination": "/"
+    },
+    {
       "source": "/story",
       "destination": "/"
     },

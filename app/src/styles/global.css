@@ -84,6 +84,11 @@ textarea:focus-visible {
   overflow-x: clip;
 }
 
+.route-transition {
+  min-height: 100vh;
+  will-change: transform, opacity;
+}
+
 .decorative-bg {
   position: absolute;
   inset: 0;
@@ -366,6 +371,60 @@ textarea:focus-visible {
 
 .contact-list p {
   margin: 0;
+}
+
+.letter-page-card {
+  width: min(960px, 100%);
+}
+
+.letter-page-back {
+  margin: 0.25rem 0 1rem;
+}
+
+.letter-page-content {
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: color-mix(in oklab, var(--surface) 90%, var(--surface-soft) 10%);
+  padding: clamp(1rem, 2vw, 1.8rem);
+}
+
+.letter-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.7rem;
+}
+
+.letter-page-header h2 {
+  margin: 0;
+  font-size: clamp(1.3rem, 2.7vw, 1.9rem);
+}
+
+.letter-page-message {
+  margin: 1rem 0 0;
+  line-height: 1.7;
+  color: var(--text);
+  white-space: pre-wrap;
+}
+
+.letter-page-locked {
+  margin-top: 0.8rem;
+  border: 1px dashed var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface-soft);
+  padding: 0.9rem;
+}
+
+.letter-page-locked p {
+  margin: 0 0 0.6rem;
+}
+
+.letter-page-actions {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
 }
 
 .story-timeline {
@@ -745,6 +804,10 @@ textarea:focus-visible {
 
   .story-step {
     grid-template-columns: 1fr;
+  }
+
+  .letter-page-header {
+    flex-direction: column;
   }
 }
 

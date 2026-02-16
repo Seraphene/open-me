@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { AnimatePresence, LazyMotion } from "framer-motion";
+import { LazyMotion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import EnvelopeCard from "./components/EnvelopeCard";
-import LetterViewer from "./components/LetterViewer";
 import AppHeader from "./components/layout/AppHeader";
 import DecorativeBackground from "./components/layout/DecorativeBackground";
 import SiteNav from "./components/layout/SiteNav";
@@ -52,12 +52,6 @@ type ReadReceiptPayload = {
   deviceType: "mobile" | "desktop" | "tablet" | "unknown";
 };
 
-type EmergencySupportPayload = {
-  message: string;
-  recipientEmail?: string;
-  context?: string;
-};
-
 type LetterUpdatePayload = {
   id: string;
   title: string;
@@ -105,22 +99,6 @@ async function postReadReceipt(payload: ReadReceiptPayload) {
     endpoint: "/api/read-receipt",
     payload
   });
-}
-
-async function postEmergencySupport(payload: EmergencySupportPayload) {
-  const response = await fetch("/api/emergency-notify", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(payload)
-  });
-
-  const body = (await response.json()) as { message?: string };
-
-  if (!response.ok) {
-    throw new Error(body.message ?? "Emergency support request failed.");
-  }
 }
 
 async function fetchLetters() {
@@ -286,6 +264,7 @@ async function signOutCurrentUser() {
 }
 
 function App() {
+  const navigate = useNavigate();
   const [letters, setLetters] = useState<Letter[]>(seedLetters);
   const [lettersBusy, setLettersBusy] = useState(true);
   const [lettersRefreshing, setLettersRefreshing] = useState(false);
@@ -294,7 +273,6 @@ function App() {
   const [pendingOfflineEvents, setPendingOfflineEvents] = useState(0);
   const [swUpdateReady, setSwUpdateReady] = useState(false);
   const [now, setNow] = useState(() => new Date());
-  const [activeLetterId, setActiveLetterId] = useState<string | null>(null);
   const [confirmedHonorLocks, setConfirmedHonorLocks] = useState<Record<string, boolean>>({});
   const [authUser, setAuthUser] = useState<AuthUser | null>(null);
   const [emailInput, setEmailInput] = useState("");
@@ -304,8 +282,6 @@ function App() {
   const [cmsForm, setCmsForm] = useState<CmsLetterForm>(() => letterToForm(seedLetters[0]));
   const [cmsBusy, setCmsBusy] = useState(false);
   const [cmsMessage, setCmsMessage] = useState<string | null>(null);
-  const [emergencyBusy, setEmergencyBusy] = useState(false);
-  const [emergencyMessage, setEmergencyMessage] = useState<string | null>(null);
   const [isOnline, setIsOnline] = useState<boolean>(() =>
     typeof navigator === "undefined" ? true : navigator.onLine
   );
@@ -457,36 +433,6 @@ function App() {
   }, [isOnline]);
 
   useEffect(() => {
-    if (!activeLetterId) {
-      return;
-    }
-
-    const onEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setActiveLetterId(null);
-      }
-    };
-
-    window.addEventListener("keydown", onEscape);
-    return () => {
-      window.removeEventListener("keydown", onEscape);
-    };
-  }, [activeLetterId]);
-
-  useEffect(() => {
-    if (!activeLetterId) {
-      return;
-    }
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [activeLetterId]);
-
-  useEffect(() => {
     if (!letters.length) {
       return;
     }
@@ -500,11 +446,6 @@ function App() {
       return letterToForm(letters[0]);
     });
   }, [letters]);
-
-  const activeLetter = useMemo(
-    () => letters.find((letter) => letter.id === activeLetterId) ?? null,
-    [activeLetterId, letters]
-  );
 
   const cmsSelectedLetter = useMemo(
     () => letters.find((letter) => letter.id === cmsForm.id) ?? null,
@@ -551,30 +492,7 @@ function App() {
       deviceType: detectDeviceType()
     });
 
-    setEmergencyMessage(null);
-
-    setActiveLetterId(letter.id);
-  };
-
-  const handleEmergencySupport = async () => {
-    if (!activeLetter) {
-      return;
-    }
-
-    setEmergencyBusy(true);
-    setEmergencyMessage(null);
-    try {
-      await postEmergencySupport({
-        message: `Emergency support requested while reading letter: ${activeLetter.title}`,
-        recipientEmail: authUser?.email ?? undefined,
-        context: `letterId=${activeLetter.id}; lockType=${activeLetter.lockType}`
-      });
-      setEmergencyMessage("Emergency support request sent.");
-    } catch (error) {
-      setEmergencyMessage(error instanceof Error ? error.message : "Emergency support request failed.");
-    } finally {
-      setEmergencyBusy(false);
-    }
+    navigate(`/open/letter/${letter.id}`);
   };
 
   const handleGoogleSignIn = async () => {
@@ -968,17 +886,6 @@ function App() {
         </EntranceAnimator>
         </section>
 
-        <AnimatePresence>
-          {activeLetter ? (
-            <LetterViewer
-              letter={activeLetter}
-              onClose={() => setActiveLetterId(null)}
-              onEmergencySupport={handleEmergencySupport}
-              emergencyBusy={emergencyBusy}
-              emergencyMessage={emergencyMessage}
-            />
-          ) : null}
-        </AnimatePresence>
       </main>
     </LazyMotion>
   );
