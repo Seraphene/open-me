@@ -1,0 +1,8 @@
+{
+  "name": "open-me-workspace",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "install:app": "npm --prefix app install"
+  }
+}

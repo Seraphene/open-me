@@ -1,0 +1,10 @@
+{
+  "name": "Open Me",
+  "short_name": "OpenMe",
+  "description": "Open When gift app",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#f3e8ff",
+  "icons": []
+}
