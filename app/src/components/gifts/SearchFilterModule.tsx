@@ -1,6 +1,6 @@
-export type Region = "india" | "international";
-export type Occasion = "all" | "birthday" | "anniversary" | "valentine" | "friendship";
-export type GiftType = "all" | "cakes" | "flowers" | "hampers";
+export type Region = "all" | "unlockable";
+export type Occasion = "all" | "honor" | "time";
+export type GiftType = "all" | "image" | "audio" | "video";
 
 type SearchFilterModuleProps = {
   region: Region;
@@ -23,49 +23,47 @@ function SearchFilterModule({
 }: SearchFilterModuleProps) {
   return (
     <section className="gift-search" aria-label="Search and filter">
-      <div className="gift-region-toggle" role="tablist" aria-label="Region">
+      <div className="gift-region-toggle" role="tablist" aria-label="View mode">
         <button
           type="button"
           role="tab"
-          aria-selected={region === "india"}
-          className={region === "india" ? "is-active" : ""}
-          onClick={() => onRegionChange("india")}
+          aria-selected={region === "all"}
+          className={region === "all" ? "is-active" : ""}
+          onClick={() => onRegionChange("all")}
         >
-          India
+          All letters
         </button>
         <button
           type="button"
           role="tab"
-          aria-selected={region === "international"}
-          className={region === "international" ? "is-active" : ""}
-          onClick={() => onRegionChange("international")}
+          aria-selected={region === "unlockable"}
+          className={region === "unlockable" ? "is-active" : ""}
+          onClick={() => onRegionChange("unlockable")}
         >
-          International
+          Unlockable now
         </button>
       </div>
 
       <div className="gift-input-group">
         <label>
-          Occasion
+          Lock type
           <select value={occasion} onChange={(event) => onOccasionChange(event.target.value as Occasion)}>
             <option value="all">All</option>
-            <option value="birthday">Birthday</option>
-            <option value="anniversary">Anniversary</option>
-            <option value="valentine">Valentine</option>
-            <option value="friendship">Friendship</option>
+            <option value="honor">Honor lock</option>
+            <option value="time">Time lock</option>
           </select>
         </label>
         <label>
-          Gift type
+          Media kind
           <select value={giftType} onChange={(event) => onGiftTypeChange(event.target.value as GiftType)}>
             <option value="all">All</option>
-            <option value="cakes">Cakes</option>
-            <option value="flowers">Flowers</option>
-            <option value="hampers">Hampers</option>
+            <option value="image">Image</option>
+            <option value="audio">Audio</option>
+            <option value="video">Video</option>
           </select>
         </label>
         <button type="button" className="gift-primary-button" onClick={onSubmit}>
-          Find Gifts
+          Find Letters
         </button>
       </div>
     </section>

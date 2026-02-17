@@ -1041,6 +1041,21 @@ textarea:focus-visible {
   font-weight: 700;
 }
 
+.gift-product-card small {
+  color: #7f5f66;
+  font-weight: 600;
+}
+
+.gift-card-actions {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.gift-card-actions .gift-primary-button,
+.gift-card-actions .gift-secondary-button {
+  flex: 1;
+}
+
 .mini-cart {
   min-height: calc(100vh - 2.4rem);
   padding: 0.9rem;
